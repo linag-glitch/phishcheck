@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Phishing erkennen – Eine Diplomarbeit</title>
-  <meta name="description" content="Eine Diplomarbeit, die über Phishing aufklärt: woran man gefälschte Nachrichten erkennt und was man tun sollte.">
+  <meta name="description" content="Gefälschte E-Mails, SMS und WhatsApp-Nachrichten erkennen: Warnzeichen, typische Beispiele und was Sie tun können, wenn Sie schon geklickt haben.">
 
   <script>
     /* ================================================================
@@ -30,12 +30,14 @@
     :root {
       --gelb: #FFD60A;
       --gelb-hell: #FFF6C2;
-      --text: #141414;
-      --text-leise: #5c5c5c;
+      --rot: #B42318;
+      --rot-hell: #FDECEA;
+      --text: #111111;
+      --text-leise: #3f3f3f;
       --hintergrund: #ffffff;
-      --flaeche: #f6f6f4;
-      --linie: #e6e6e2;
-      --breite: 960px;
+      --flaeche: #f5f5f2;
+      --linie: #dcdcd6;
+      --breite: 1000px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,48 +46,49 @@
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color: var(--text);
       background: var(--hintergrund);
-      line-height: 1.6;
-      font-size: 17px;
+      line-height: 1.7;
+      font-size: 19px;
     }
     .container { max-width: var(--breite); margin: 0 auto; padding: 0 20px; }
-    .schmal { max-width: 760px; }
+    .schmal { max-width: 780px; }
+    a { color: var(--text); text-underline-offset: 3px; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
 
     /* ---------- Unterseiten (Impressum, Datenschutz) ---------- */
-    .unterseite { display: none; scroll-margin-top: 60px; }
+    .unterseite { display: none; scroll-margin-top: 70px; }
     .unterseite:target { display: block; }
     body:has(.unterseite:target) .hauptseite { display: none; }
 
     /* ---------- Navigation ---------- */
     nav {
       position: sticky; top: 0; z-index: 10;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.96);
       border-bottom: 1px solid var(--linie);
     }
-    nav .container { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-    .logo { font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+    nav .container { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { font-weight: 800; font-size: 21px; letter-spacing: -0.01em; text-decoration: none; color: var(--text); }
     .logo span { background: var(--gelb); padding: 0 6px; border-radius: 4px; }
-    nav ul { list-style: none; display: flex; gap: 24px; }
-    nav a.link { color: var(--text-leise); text-decoration: none; font-size: 15px; }
-    nav a.link:hover { color: var(--text); }
+    nav ul { list-style: none; display: flex; gap: 28px; }
+    nav a.link { color: var(--text); text-decoration: none; font-size: 17px; font-weight: 500; padding: 8px 0; }
+    nav a.link:hover { text-decoration: underline; }
 
     /* ---------- Startbereich mit Zähler ---------- */
-    .hero { padding: 96px 0 80px; text-align: center; }
+    .hero { padding: 88px 0 80px; text-align: center; }
     .etikett {
-      display: inline-block; font-size: 13px; font-weight: 600;
+      display: inline-block; font-size: 15px; font-weight: 600;
       text-transform: uppercase; letter-spacing: 0.08em;
       color: var(--text-leise); margin-bottom: 20px;
     }
     h1 {
-      font-size: clamp(38px, 7vw, 68px);
-      line-height: 1.08; letter-spacing: -0.035em; font-weight: 800;
-      margin-bottom: 20px;
+      font-size: clamp(40px, 7vw, 66px);
+      line-height: 1.1; letter-spacing: -0.03em; font-weight: 800;
+      margin-bottom: 24px;
     }
     .markiert {
       background: linear-gradient(transparent 58%, var(--gelb) 58%, var(--gelb) 92%, transparent 92%);
       padding: 0 4px;
     }
-    .unterzeile { font-size: 19px; color: var(--text-leise); max-width: 560px; margin: 0 auto; }
+    .unterzeile { font-size: 21px; color: var(--text-leise); max-width: 640px; margin: 0 auto; }
     .zaehler {
       margin: 56px auto 0;
       display: inline-flex; flex-direction: column; align-items: center;
@@ -96,99 +99,122 @@
     }
     .zaehler-zahl {
       font-size: clamp(56px, 12vw, 96px);
-      font-weight: 800; letter-spacing: -0.04em; line-height: 1;
+      font-weight: 800; letter-spacing: -0.03em; line-height: 1;
       font-variant-numeric: tabular-nums;
     }
-    .zaehler-text { margin-top: 10px; font-size: 15px; color: var(--text-leise); font-weight: 500; }
+    .zaehler-text { margin-top: 12px; font-size: 18px; color: var(--text-leise); font-weight: 500; }
 
     /* ---------- Abschnitte ---------- */
-    section { padding: 80px 0; }
+    section { padding: 88px 0; scroll-margin-top: 68px; }
     section.grau { background: var(--flaeche); }
     h2 {
-      font-size: clamp(28px, 4.5vw, 40px);
-      letter-spacing: -0.03em; line-height: 1.15; font-weight: 800;
-      margin-bottom: 16px;
+      font-size: clamp(30px, 4.5vw, 42px);
+      letter-spacing: -0.02em; line-height: 1.2; font-weight: 800;
+      margin-bottom: 18px;
     }
-    .einleitung { color: var(--text-leise); max-width: 640px; margin-bottom: 48px; }
-    .raster { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .einleitung { color: var(--text-leise); max-width: 700px; margin-bottom: 48px; font-size: 20px; }
+    .raster { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+    .raster.zwei { grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); }
     .karte {
       background: var(--hintergrund);
       border: 1px solid var(--linie);
       border-radius: 16px;
-      padding: 28px;
+      padding: 30px;
     }
-    .karte h3 { font-size: 19px; margin-bottom: 8px; letter-spacing: -0.01em; }
-    .karte p { color: var(--text-leise); font-size: 16px; }
+    .karte h3 { font-size: 22px; line-height: 1.3; margin-bottom: 10px; }
+    .karte p { color: var(--text-leise); }
     .nummer {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 36px; height: 36px; border-radius: 50%;
-      background: var(--gelb); font-weight: 800; font-size: 15px;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--gelb); font-weight: 800; font-size: 18px;
       margin-bottom: 16px;
     }
-    .hinweis {
-      margin-top: 48px; padding: 28px 32px;
-      border-left: 6px solid var(--gelb);
-      background: var(--hintergrund);
-      border-radius: 0 16px 16px 0;
+
+    /* ---------- Beispiele ---------- */
+    .beispiel { display: flex; flex-direction: column; gap: 16px; }
+    .beispiel-kopf { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-leise); }
+    .nachricht {
+      background: var(--flaeche);
+      border: 1px solid var(--linie);
+      border-radius: 14px;
+      padding: 18px 20px;
+      font-size: 17px; line-height: 1.55;
     }
-    .hinweis h3 { font-size: 19px; margin-bottom: 10px; }
-    .hinweis ul { padding-left: 20px; color: var(--text-leise); }
-    .hinweis li { margin-bottom: 6px; }
+    .nachricht .absender { display: block; font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+    .falsch { background: var(--rot-hell); color: var(--rot); padding: 0 3px; border-radius: 3px; font-weight: 600; }
+    .erkennen { font-size: 17px; }
+    .erkennen strong { display: block; margin-bottom: 4px; }
+    .erkennen ul { padding-left: 20px; color: var(--text-leise); }
+
+    /* ---------- Hilfe ---------- */
+    .schritte { counter-reset: schritt; list-style: none; display: grid; gap: 14px; margin-bottom: 48px; max-width: 760px; }
+    .schritte li {
+      counter-increment: schritt;
+      position: relative; padding: 18px 22px 18px 74px;
+      background: var(--hintergrund); border: 1px solid var(--linie); border-radius: 14px;
+    }
+    .schritte li::before {
+      content: counter(schritt);
+      position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--gelb); font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .kontakt h3 { font-size: 20px; margin-bottom: 6px; }
+    .kontakt .gross { font-size: 28px; font-weight: 800; letter-spacing: -0.01em; display: block; margin: 4px 0 6px; text-decoration: none; }
+    .kontakt p { font-size: 17px; }
 
     /* ---------- Team ---------- */
     .person { text-align: center; }
     .avatar {
-      width: 88px; height: 88px; border-radius: 50%;
+      width: 92px; height: 92px; border-radius: 50%;
       margin: 0 auto 16px;
       background: var(--gelb-hell); border: 2px solid var(--gelb);
       display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 28px;
+      font-weight: 800; font-size: 30px;
     }
 
     /* ---------- Rechtstexte ---------- */
     .rechtstext { padding: 64px 0 80px; }
     .rechtstext h1 { font-size: clamp(34px, 6vw, 48px); margin-bottom: 12px; }
     .rechtstext h2 {
-      font-size: 22px; letter-spacing: -0.02em; margin: 40px 0 12px;
+      font-size: 24px; margin: 40px 0 12px;
       padding-left: 14px; border-left: 5px solid var(--gelb);
     }
-    .rechtstext h3 { font-size: 18px; margin: 20px 0 6px; }
-    .rechtstext p, .rechtstext li { color: #2b2b2b; }
-    .rechtstext p { margin-bottom: 12px; }
-    .rechtstext ul { padding-left: 22px; margin-bottom: 12px; }
+    .rechtstext h3 { font-size: 20px; margin: 20px 0 6px; }
+    .rechtstext p { margin-bottom: 14px; }
+    .rechtstext ul { padding-left: 24px; margin-bottom: 14px; }
     .rechtstext li { margin-bottom: 6px; }
-    .rechtstext a { color: var(--text); }
-    .stand { color: var(--text-leise) !important; margin-bottom: 40px !important; }
-    .beschriftung { font-size: 14px; color: var(--text-leise) !important; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px !important; }
+    .stand { color: var(--text-leise); margin-bottom: 40px !important; }
+    .beschriftung { font-size: 15px; color: var(--text-leise); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px !important; }
     .kasten {
       background: var(--gelb-hell); border: 1px solid var(--gelb);
       border-radius: 12px; padding: 18px 22px; margin: 12px 0 16px;
     }
     .kasten p:last-child { margin-bottom: 0; }
-    code { background: var(--gelb-hell); padding: 1px 6px; border-radius: 4px; font-size: 15px; }
+    code { background: var(--gelb-hell); padding: 1px 6px; border-radius: 4px; font-size: 17px; }
 
     /* ---------- Fußzeile ---------- */
-    footer { border-top: 1px solid var(--linie); padding: 32px 0; color: var(--text-leise); font-size: 14px; }
+    footer { border-top: 1px solid var(--linie); padding: 36px 0; color: var(--text-leise); font-size: 17px; }
     footer .container { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-    footer a { color: var(--text-leise); }
-    footer a:hover { color: var(--text); }
+    footer a { color: var(--text); }
 
     /* ---------- Pop-up beim Öffnen ---------- */
     .popup {
       position: fixed; inset: 0; z-index: 100;
       display: flex; align-items: center; justify-content: center;
       padding: 20px;
-      background: rgba(20, 20, 20, 0.6);
+      background: rgba(20, 20, 20, 0.65);
       backdrop-filter: blur(6px);
       animation: einblenden 0.3s ease-out;
     }
     .popup[hidden] { display: none; }
     .popup-fenster {
       position: relative;
-      width: 100%; max-width: 640px;
+      width: 100%; max-width: 660px;
       background: var(--gelb);
       border-radius: 24px;
-      padding: 72px 40px 48px;
+      padding: 76px 40px 44px;
       text-align: center;
       box-shadow: 0 24px 80px rgba(0,0,0,0.35);
       animation: reinploppen 0.45s cubic-bezier(.2, 1.4, .4, 1);
@@ -196,31 +222,42 @@
     .popup-symbol { font-size: 64px; line-height: 1; margin-bottom: 20px; }
     .popup h2 {
       font-size: clamp(40px, 9vw, 72px);
-      line-height: 1.02; letter-spacing: -0.04em; font-weight: 900;
+      line-height: 1.05; letter-spacing: -0.03em; font-weight: 900;
       margin-bottom: 20px;
     }
-    .popup p { font-size: 18px; max-width: 460px; margin: 0 auto; }
+    .popup p { font-size: 20px; max-width: 480px; margin: 0 auto 28px; }
     .popup-x {
       position: absolute; top: 16px; right: 16px;
-      width: 48px; height: 48px; border-radius: 50%;
+      width: 56px; height: 56px; border-radius: 50%;
       border: 0; cursor: pointer;
       background: var(--text); color: #fff;
-      font-size: 26px; line-height: 1; font-weight: 700;
+      font-size: 28px; line-height: 1; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
       transition: transform 0.15s;
     }
     .popup-x:hover { transform: scale(1.08) rotate(90deg); }
-    .popup-x:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    .popup-weiter {
+      border: 0; cursor: pointer;
+      background: var(--text); color: #fff;
+      font: inherit; font-size: 19px; font-weight: 700;
+      padding: 16px 32px; border-radius: 999px;
+    }
+    .popup-weiter:hover { background: #333; }
+    .popup-x:focus-visible, .popup-weiter:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     body.popup-offen { overflow: hidden; }
     @keyframes einblenden { from { opacity: 0; } }
     @keyframes reinploppen { from { opacity: 0; transform: scale(0.85); } }
 
-    @media (max-width: 560px) {
-      .popup-fenster { padding: 72px 24px 40px; }
-      nav ul { gap: 16px; }
+    @media (max-width: 640px) {
+      body { font-size: 18px; }
+      nav ul { display: none; }
       .hero { padding: 64px 0 56px; }
+      .unterzeile { font-size: 19px; }
       .zaehler { padding: 24px 32px; }
-      section { padding: 56px 0; }
+      section { padding: 60px 0; }
+      .karte { padding: 24px; }
+      .popup-fenster { padding: 76px 24px 36px; }
+      .popup p { font-size: 18px; }
     }
   </style>
 </head>
@@ -234,7 +271,8 @@
       <button class="popup-x" id="popup-x" type="button" aria-label="Schließen">✕</button>
       <div class="popup-symbol" aria-hidden="true">🎣</div>
       <h2 id="popup-titel">Sie sind drauf reingefallen!</h2>
-      <p>Sie haben einfach auf einen Link geklickt. Keine Sorge, hier passiert nichts. Aber genau so funktioniert Phishing.</p>
+      <p>Sie haben auf einen Link geklickt, ohne zu wissen, wohin er führt. Keine Sorge, hier passiert nichts. Aber genau so funktioniert Phishing.</p>
+      <button class="popup-weiter" id="popup-weiter" type="button">Weiter zur Seite</button>
     </div>
   </div>
 
@@ -242,7 +280,9 @@
     <div class="container">
       <a href="#" class="logo"><span>Phish</span>Check</a>
       <ul>
-        <li><a class="link" href="#projekt">Über das Projekt</a></li>
+        <li><a class="link" href="#warnzeichen">Warnzeichen</a></li>
+        <li><a class="link" href="#beispiele">Beispiele</a></li>
+        <li><a class="link" href="#hilfe">Hilfe</a></li>
         <li><a class="link" href="#team">Team</a></li>
       </ul>
     </div>
@@ -257,59 +297,167 @@
       <div class="container">
         <div class="etikett">Eine Diplomarbeit</div>
         <h1>Nicht jeder Link<br>ist <span class="markiert">harmlos</span>.</h1>
-        <p class="unterzeile">Wir zeigen, wie Betrüger mit gefälschten Nachrichten an Passwörter und Daten kommen – und wie du dich schützt.</p>
+        <p class="unterzeile">
+          Betrüger geben sich per E-Mail, SMS oder WhatsApp als Bank, Post oder Behörde aus.
+          Hier erfahren Sie, wie Sie solche Nachrichten erkennen und was Sie tun können.
+        </p>
 
         <div class="zaehler" aria-live="polite">
           <div class="zaehler-zahl" id="zaehler">0</div>
-          <div class="zaehler-text">Besucher haben sich schon informiert</div>
+          <div class="zaehler-text">Personen haben sich hier bereits informiert</div>
         </div>
       </div>
     </header>
 
-    <section id="projekt" class="grau">
+    <!-- ===================== WARNZEICHEN ===================== -->
+    <section id="warnzeichen" class="grau">
       <div class="container">
-        <h2>Über das Projekt</h2>
+        <h2>Woran Sie Phishing erkennen</h2>
         <p class="einleitung">
-          Phishing heißt: Jemand gibt sich per E-Mail, SMS oder Nachricht als Bank, Paketdienst oder Schule aus,
-          damit du auf einen Link klickst und deine Daten eingibst. Mit diesem Projekt wollen wir zeigen,
-          woran man solche Nachrichten erkennt.
+          „Phishing“ kommt vom englischen Wort für Angeln. Betrüger werfen eine Nachricht aus, die echt
+          aussieht, und hoffen, dass jemand anbeißt: auf einen Link klickt und dort Passwort, PIN oder
+          Kartendaten eingibt. Diese vier Warnzeichen helfen Ihnen, eine Fälschung zu erkennen.
         </p>
 
-        <div class="raster">
+        <div class="raster zwei">
           <div class="karte">
             <div class="nummer">1</div>
-            <h3>Absender prüfen</h3>
-            <p>Sieh dir die echte E-Mail-Adresse an. „support@paypa1-sicherheit.com“ ist nicht PayPal.</p>
+            <h3>Der Absender stimmt nicht</h3>
+            <p>Schauen Sie sich die genaue E-Mail-Adresse oder Telefonnummer an. „service@raiffeisen-sicherheit.info“ ist nicht Ihre Bank.</p>
           </div>
           <div class="karte">
             <div class="nummer">2</div>
-            <h3>Druck und Eile</h3>
-            <p>„Dein Konto wird in 24 Stunden gesperrt!“ – Zeitdruck ist ein typischer Trick, damit du nicht nachdenkst.</p>
+            <h3>Es wird Druck gemacht</h3>
+            <p>„Ihr Konto wird heute gesperrt!“ oder „Letzte Mahnung!“: Zeitdruck soll Sie dazu bringen, schnell zu handeln, ohne nachzudenken.</p>
           </div>
           <div class="karte">
             <div class="nummer">3</div>
-            <h3>Links nicht blind klicken</h3>
-            <p>Fahr mit der Maus über den Link oder halte ihn am Handy gedrückt. Stimmt die Adresse wirklich?</p>
+            <h3>Ein Link führt woandershin</h3>
+            <p>Klicken Sie nicht sofort. Am Computer zeigt die Maus über dem Link die echte Adresse, am Handy hilft langes Drücken. Wirkt die Adresse seltsam, lassen Sie es.</p>
           </div>
           <div class="karte">
             <div class="nummer">4</div>
-            <h3>Nach Daten gefragt?</h3>
-            <p>Seriöse Firmen fragen nie per E-Mail nach deinem Passwort, deiner PIN oder deinen Kartendaten.</p>
+            <h3>Man will Ihre Daten</h3>
+            <p>Ihre Bank, die Post oder das Finanzamt fragen <strong>nie</strong> per E-Mail oder SMS nach Passwort, PIN, TAN oder Kartennummer.</p>
           </div>
-        </div>
-
-        <div class="hinweis">
-          <h3>Hast du schon geklickt? Das kannst du tun:</h3>
-          <ul>
-            <li>Passwort sofort ändern – auch bei anderen Konten mit demselben Passwort.</li>
-            <li>Bei Bankdaten: sofort die Bank anrufen und die Karte sperren lassen.</li>
-            <li>Die Nachricht als Spam/Phishing melden und löschen.</li>
-            <li>Einer Lehrkraft oder den Eltern Bescheid geben.</li>
-          </ul>
         </div>
       </div>
     </section>
 
+    <!-- ===================== BEISPIELE ===================== -->
+    <section id="beispiele">
+      <div class="container">
+        <h2>Typische Beispiele</h2>
+        <p class="einleitung">
+          So oder so ähnlich sehen echte Betrugsnachrichten aus. Die verdächtigen Stellen sind
+          <span class="falsch">rot markiert</span>.
+        </p>
+
+        <div class="raster zwei">
+          <div class="karte beispiel">
+            <div class="beispiel-kopf">📦 SMS vom „Paketdienst“</div>
+            <div class="nachricht">
+              <span class="absender">Von: <span class="falsch">+44 7700 900123</span></span>
+              Ihr Paket konnte nicht zugestellt werden. Bitte bestätigen Sie Ihre Adresse und zahlen Sie
+              1,99 € Gebühr: <span class="falsch">post-at-zustellung.info</span>
+            </div>
+            <div class="erkennen">
+              <strong>Woran Sie es erkennen:</strong>
+              <ul>
+                <li>ausländische Nummer</li>
+                <li>falsche Internetadresse statt post.at</li>
+                <li>kleiner Betrag, damit Sie Ihre Kartendaten eingeben</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="karte beispiel">
+            <div class="beispiel-kopf">🏦 E-Mail von der „Bank“</div>
+            <div class="nachricht">
+              <span class="absender">Von: <span class="falsch">kundenservice@bank-austria-sicher.com</span></span>
+              <span class="falsch">Sehr geehrter Kunde</span>, Ihr Konto wurde aus Sicherheitsgründen eingeschränkt.
+              Bestätigen Sie Ihre Daten <span class="falsch">innerhalb von 24 Stunden</span>, sonst wird Ihr Konto gesperrt.
+            </div>
+            <div class="erkennen">
+              <strong>Woran Sie es erkennen:</strong>
+              <ul>
+                <li>keine persönliche Anrede</li>
+                <li>fremde Absender-Adresse</li>
+                <li>Drohung mit Sperre und Zeitdruck</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="karte beispiel">
+            <div class="beispiel-kopf">🏛️ E-Mail vom „Finanzamt“</div>
+            <div class="nachricht">
+              <span class="absender">Von: <span class="falsch">finanzonline@bmf-rueckerstattung.net</span></span>
+              Sie haben Anspruch auf eine Steuerrückerstattung von <span class="falsch">487,20 €</span>.
+              Geben Sie für die Auszahlung Ihre <span class="falsch">Kartendaten</span> ein.
+            </div>
+            <div class="erkennen">
+              <strong>Woran Sie es erkennen:</strong>
+              <ul>
+                <li>das Finanzamt schreibt über FinanzOnline, nicht so</li>
+                <li>Geld zurück gibt es nie über Kartendaten</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="karte beispiel">
+            <div class="beispiel-kopf">💬 WhatsApp vom „Kind“</div>
+            <div class="nachricht">
+              <span class="absender">Von: <span class="falsch">unbekannte Nummer</span></span>
+              Hallo Mama, das ist meine <span class="falsch">neue Nummer</span>, mein Handy ist kaputt.
+              Kannst du mir <span class="falsch">schnell eine Rechnung überweisen</span>? Ich zahl's dir morgen zurück.
+            </div>
+            <div class="erkennen">
+              <strong>Woran Sie es erkennen:</strong>
+              <ul>
+                <li>neue Nummer und sofort eine Bitte um Geld</li>
+                <li>rufen Sie Ihr Kind unter der <strong>alten</strong> Nummer an</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== HILFE ===================== -->
+    <section id="hilfe" class="grau">
+      <div class="container">
+        <h2>Sie haben schon geklickt? Das können Sie tun</h2>
+        <p class="einleitung">Das kann jedem passieren. Wichtig ist, schnell zu handeln:</p>
+
+        <ol class="schritte">
+          <li><strong>Ruhe bewahren</strong> und auf der verdächtigen Seite nichts mehr eingeben.</li>
+          <li><strong>Karte oder Konto sperren lassen</strong>, wenn Sie Bank- oder Kartendaten eingegeben haben.</li>
+          <li><strong>Passwort ändern</strong>, auch bei anderen Konten, wo Sie dasselbe Passwort verwenden.</li>
+          <li><strong>Anzeige erstatten</strong> bei der Polizei, auch wenn noch kein Geld weg ist.</li>
+          <li><strong>Angehörige oder Bekannte informieren</strong>, damit sie gewarnt sind.</li>
+        </ol>
+
+        <div class="raster">
+          <div class="karte kontakt">
+            <h3>Karte sperren</h3>
+            <a class="gross" href="tel:08002048800">0800 204 8800</a>
+            <p>Sperr-Notruf für Bankomat- und Kreditkarten in Österreich, rund um die Uhr und kostenlos. Oder direkt bei Ihrer Bank anrufen.</p>
+          </div>
+          <div class="karte kontakt">
+            <h3>Polizei</h3>
+            <a class="gross" href="tel:133">133</a>
+            <p>Anzeige erstatten können Sie bei jeder Polizeiinspektion.</p>
+          </div>
+          <div class="karte kontakt">
+            <h3>Nachricht prüfen</h3>
+            <a class="gross" href="https://www.watchlist-internet.at" rel="noopener">Watchlist Internet</a>
+            <p>Die österreichische Plattform warnt vor aktuellen Betrugsmaschen. Dort können Sie verdächtige Nachrichten auch melden.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TEAM ===================== -->
     <section id="team">
       <div class="container">
         <h2>Team</h2>
@@ -330,7 +478,7 @@
 
       <h2>Offenlegung gemäß § 25 Mediengesetz</h2>
 
-      <p class="beschriftung">Medieninhaber und Herausgeber</p>
+      <p class="beschriftung">Medieninhaberin und Herausgeberin</p>
       <div class="kasten">
         <p><span data-feld="verantwortlich"></span><br><span data-feld="ort"></span>, Österreich</p>
       </div>
@@ -342,8 +490,8 @@
 
       <p class="beschriftung">Grundlegende Richtung (Blattlinie)</p>
       <p>
-        Diese Website ist Teil einer nicht-kommerziellen Diplomarbeit. Sie informiert über Phishing:
-        woran man gefälschte E-Mails, SMS und Nachrichten erkennt und was man tun kann,
+        Diese Website ist Teil einer nicht-kommerziellen Diplomarbeit. Sie informiert Erwachsene über
+        Phishing: woran man gefälschte E-Mails, SMS und Nachrichten erkennt und was man tun kann,
         wenn man darauf hereingefallen ist.
       </p>
 
@@ -351,8 +499,8 @@
       <p>
         Wir haben die Inhalte dieser Website sorgfältig erstellt. Trotzdem können wir keine Gewähr
         dafür übernehmen, dass alle Informationen richtig, vollständig und aktuell sind.
-        Die Tipps auf dieser Seite ersetzen keine Beratung durch Fachleute. Wenn du Opfer eines
-        Betrugs geworden bist, wende dich an deine Bank und an die Polizei.
+        Die Hinweise auf dieser Seite ersetzen keine Beratung durch Fachleute. Wenn Sie Opfer eines
+        Betrugs geworden sind, wenden Sie sich bitte an Ihre Bank und an die Polizei.
       </p>
 
       <h3>Haftung für Links</h3>
@@ -365,12 +513,14 @@
       <h2>Urheberrecht</h2>
       <p>
         Die Texte und die Gestaltung dieser Website wurden vom Projektteam erstellt und unterliegen
-        dem österreichischen Urheberrecht. Wenn du Inhalte verwenden möchtest, frag uns bitte vorher.
+        dem österreichischen Urheberrecht. Wenn Sie Inhalte verwenden möchten, fragen Sie uns bitte vorher.
+        Die Beispielnachrichten sind nachgestellt; Namen von Unternehmen und Behörden werden nur
+        verwendet, um typische Betrugsmaschen zu zeigen.
       </p>
 
       <h2>Datenschutz</h2>
       <p>
-        Informationen dazu, welche Daten beim Besuch dieser Website verarbeitet werden, findest du in
+        Informationen dazu, welche Daten beim Besuch dieser Website verarbeitet werden, finden Sie in
         unserer <a href="#datenschutz">Datenschutzerklärung</a>.
       </p>
     </div>
@@ -385,7 +535,7 @@
       <p class="stand">Stand: November 2026 · <a href="#">← Zurück zur Startseite</a></p>
 
       <p>
-        Der Schutz deiner Daten ist uns wichtig. Diese Website verarbeitet so wenige Daten wie möglich.
+        Der Schutz Ihrer Daten ist uns wichtig. Diese Website verarbeitet so wenige Daten wie möglich.
         Wir verwenden <strong>keine Cookies</strong>, <strong>kein Tracking für Werbung</strong>,
         keine Social-Media-Plugins und keine Schriften von Google. Hier erklären wir nach der
         Datenschutz-Grundverordnung (DSGVO), dem österreichischen Datenschutzgesetz (DSG) und dem
@@ -401,30 +551,30 @@
         </p>
       </div>
       <p>
-        Diese Website ist Teil einer Diplomarbeit. Bei Fragen zum Datenschutz kannst du uns jederzeit über die
-        oben genannte E-Mail-Adresse erreichen.
+        Diese Website ist Teil einer Diplomarbeit. Bei Fragen zum Datenschutz können Sie uns jederzeit
+        über die oben genannte E-Mail-Adresse erreichen.
       </p>
 
       <h2>2. Hosting und Server-Logfiles</h2>
       <p>
-        Diese Website ist bei einem Hosting-Anbieter gespeichert, der sie an deinen Browser ausliefert.
-        Wenn du die Seite aufrufst, verarbeitet dessen Server dabei automatisch technische Daten, die
-        dein Browser übermittelt:
+        Diese Website wird über <strong>GitHub Pages</strong> bereitgestellt, einen Dienst der
+        GitHub, Inc. (USA). Wenn Sie die Seite aufrufen, verarbeitet der Server dabei automatisch
+        technische Daten, die Ihr Browser übermittelt:
       </p>
       <ul>
         <li>IP-Adresse</li>
         <li>Datum und Uhrzeit des Aufrufs</li>
         <li>aufgerufene Seite</li>
         <li>Browser und Betriebssystem</li>
-        <li>die Seite, von der du gekommen bist (Referrer)</li>
+        <li>die Seite, von der Sie gekommen sind (Referrer)</li>
       </ul>
       <p>
         Diese Daten sind technisch nötig, damit die Website angezeigt werden kann und sicher läuft.
         Rechtsgrundlage ist unser berechtigtes Interesse an einem sicheren und funktionierenden Betrieb
-        (Art. 6 Abs. 1 lit. f DSGVO). Die Daten werden vom Hosting-Anbieter nur kurz gespeichert und nicht
-        mit anderen Daten zusammengeführt. Hat der Anbieter seinen Sitz außerhalb der EU, erfolgt die
-        Übermittlung auf Grundlage eines Angemessenheitsbeschlusses der EU-Kommission oder von
-        Standardvertragsklauseln (Art. 45 bzw. Art. 46 DSGVO).
+        (Art. 6 Abs. 1 lit. f DSGVO). Die Übermittlung in die USA erfolgt auf Grundlage eines
+        Angemessenheitsbeschlusses der EU-Kommission oder von Standardvertragsklauseln
+        (Art. 45 bzw. Art. 46 DSGVO). Mehr dazu in der
+        <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">Datenschutzerklärung von GitHub</a>.
       </p>
 
       <h2>3. Besucherzähler</h2>
@@ -432,31 +582,31 @@
         Auf der Startseite zeigen wir an, wie viele Personen die Website schon besucht haben.
         Dafür verwenden wir den kostenlosen Zähldienst <strong>Abacus</strong>
         (<a href="https://abacus.jasoncameron.dev" rel="noopener">abacus.jasoncameron.dev</a>).
-        Beim ersten Besuch sendet dein Browser eine Anfrage an diesen Dienst, der daraufhin
+        Beim ersten Besuch sendet Ihr Browser eine Anfrage an diesen Dienst, der daraufhin
         eine Zahl um 1 erhöht. Bei jedem Besuch wird die aktuelle Zahl abgefragt und angezeigt.
       </p>
       <p>
-        Gespeichert wird dabei für uns <strong>nur diese eine Zahl</strong> – keine Namen, keine
-        IP-Adressen, keine Profile. Wir erhalten keinerlei Daten über dich und können nicht erkennen,
-        wer die Seite besucht hat. Technisch bedingt wird bei der Anfrage deine IP-Adresse an den
+        Gespeichert wird dabei für uns <strong>nur diese eine Zahl</strong>: keine Namen, keine
+        IP-Adressen, keine Profile. Wir erhalten keinerlei Daten über Sie und können nicht erkennen,
+        wer die Seite besucht hat. Technisch bedingt wird bei der Anfrage Ihre IP-Adresse an den
         Server des Dienstes übermittelt, so wie bei jedem Aufruf einer Website.
       </p>
       <p>
-        Zweck ist, die Besucherzahl auf der Startseite anzuzeigen und zu sehen, wie viele Menschen unser
-        Projekt erreicht. Rechtsgrundlage ist unser berechtigtes Interesse daran (Art. 6 Abs. 1 lit. f DSGVO).
+        Zweck ist, die Besucherzahl auf der Startseite anzuzeigen und zu sehen, wie viele Menschen unsere
+        Diplomarbeit erreicht. Rechtsgrundlage ist unser berechtigtes Interesse daran (Art. 6 Abs. 1 lit. f DSGVO).
       </p>
 
       <h3>Vermerk im Browser (Local Storage)</h3>
       <p>
-        Damit jede Person nur einmal gezählt wird, speichert die Website im Speicher deines Browsers
+        Damit jede Person nur einmal gezählt wird, speichert die Website im Speicher Ihres Browsers
         (Local Storage) den Eintrag <code>phishcheck-gezaehlt = ja</code>. Dieser Eintrag
         enthält <strong>keine persönlichen Daten</strong> und keine Kennung. Er wird nie an uns oder
-        andere gesendet und bleibt nur auf deinem Gerät. Er dient ausschließlich dazu, doppelte
+        andere gesendet und bleibt nur auf Ihrem Gerät. Er dient ausschließlich dazu, doppelte
         Zählungen zu verhindern (§ 165 Abs. 3 TKG 2021).
       </p>
       <p>
-        Du kannst den Eintrag jederzeit löschen, indem du in deinem Browser die Website-Daten bzw.
-        den Browserverlauf löschst. Wenn du die Zählung ganz verhindern möchtest, kannst du einen
+        Sie können den Eintrag jederzeit löschen, indem Sie in Ihrem Browser die Website-Daten bzw.
+        den Browserverlauf löschen. Wenn Sie die Zählung ganz verhindern möchten, können Sie einen
         Inhaltsblocker (z. B. einen Werbeblocker) verwenden.
       </p>
 
@@ -464,31 +614,31 @@
       <p>
         Wir speichern Daten nur so lange, wie es für den jeweiligen Zweck nötig ist. Die Besucherzahl
         ist nur eine einzelne Zahl und lässt keinen Rückschluss auf einzelne Personen zu. Sie wird
-        nicht mehr verwendet, sobald das Projekt beendet und die Website abgeschaltet wird.
+        nicht mehr verwendet, sobald die Diplomarbeit abgeschlossen und die Website abgeschaltet wird.
       </p>
 
       <h2>5. Kontakt per E-Mail</h2>
       <p>
-        Wenn du uns eine E-Mail schreibst, verwenden wir deine Angaben nur, um deine Anfrage zu
+        Wenn Sie uns eine E-Mail schreiben, verwenden wir Ihre Angaben nur, um Ihre Anfrage zu
         beantworten (Art. 6 Abs. 1 lit. f DSGVO). Wir geben sie nicht weiter und löschen sie, sobald
-        deine Anfrage erledigt ist.
+        Ihre Anfrage erledigt ist.
       </p>
 
-      <h2>6. Deine Rechte</h2>
-      <p>Du hast nach der DSGVO jederzeit das Recht auf:</p>
+      <h2>6. Ihre Rechte</h2>
+      <p>Sie haben nach der DSGVO jederzeit das Recht auf:</p>
       <ul>
-        <li><strong>Auskunft</strong> darüber, welche Daten wir über dich verarbeiten (Art. 15)</li>
+        <li><strong>Auskunft</strong> darüber, welche Daten wir über Sie verarbeiten (Art. 15)</li>
         <li><strong>Berichtigung</strong> falscher Daten (Art. 16)</li>
-        <li><strong>Löschung</strong> deiner Daten (Art. 17)</li>
+        <li><strong>Löschung</strong> Ihrer Daten (Art. 17)</li>
         <li><strong>Einschränkung</strong> der Verarbeitung (Art. 18)</li>
         <li><strong>Datenübertragbarkeit</strong> (Art. 20)</li>
         <li><strong>Widerspruch</strong> gegen die Verarbeitung, die auf unserem berechtigten Interesse beruht (Art. 21)</li>
       </ul>
-      <p>Schreib uns dafür einfach eine E-Mail an die oben genannte Adresse.</p>
+      <p>Schreiben Sie uns dafür einfach eine E-Mail an die oben genannte Adresse.</p>
 
       <h3>Beschwerde bei der Datenschutzbehörde</h3>
       <p>
-        Wenn du glaubst, dass wir deine Daten nicht richtig verarbeiten, kannst du dich bei der
+        Wenn Sie glauben, dass wir Ihre Daten nicht richtig verarbeiten, können Sie sich bei der
         österreichischen Datenschutzbehörde beschweren:
       </p>
       <div class="kasten">
@@ -536,6 +686,7 @@
       popupX.focus();
     }
     popupX.addEventListener("click", popupSchliessen);
+    document.getElementById("popup-weiter").addEventListener("click", popupSchliessen);
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !popup.hidden) popupSchliessen(); });
 
     /* ---------- Angaben in die Seite einsetzen ---------- */
